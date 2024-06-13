@@ -37,7 +37,7 @@ pipeline{
     post{
         always{
             script{
-                email(
+                emailext(
                     to: "giuiani.1905@hotmail.com",
                     from: "jenkinsPruebas@tw2.iudigital.edu.co",
                     subject: "Estado del proceso:${currentBuild.currentResult} ",
