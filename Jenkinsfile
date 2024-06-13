@@ -36,12 +36,15 @@ pipeline{
 
     post{
         always{
-            emailText{
-                subject: "Estado del proceso:${currentBuild.currentResult}",
-                body: "Se ha completado el proceso",
-                to: "giuiani.1905@hotmail.com",
-                from: "jenkinsPruebas@tw2.iudigital.edu.co"
+            script{
+                email(
+                    to: "giuiani.1905@hotmail.com",
+                    from: "jenkinsPruebas@tw2.iudigital.edu.co",
+                    subject: "Estado del proceso:${currentBuild.currentResult} ",
+                    body: "Se ha completado el proceso"
+                )
             }
+            cleanWs()
         }
     }
 }
