@@ -1,0 +1,35 @@
+version : '3.7'
+services :
+  proyecto-monolitica :
+    container_name : proyecto-monolitica
+    image : proyecto-monolitico:v1
+    build :
+      context : .
+    ports: 
+      - "4000:4000"
+    networks: 
+      - proyectos-app
+
+  proyecto-monolitica-2 :
+    container_name : proyecto-monolitica-2
+    image : proyecto-monolitico:v1
+    ports: 
+      - "4000"
+    networks: 
+      - proyectos-app
+
+  load_balancer :
+    container_name : load-balancer
+    image : load-balancer:v1
+    build :
+      context : ./src/load-balancer
+    ports: 
+      - "4001:80"
+    networks: 
+      - proyectos-app
+    depends_on:
+      - proyecto-monolitica
+      - proyecto-monolitica-2
+    restart: always
+networks: 
+  proyectos-app:
