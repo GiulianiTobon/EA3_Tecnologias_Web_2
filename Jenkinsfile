@@ -1,20 +1,47 @@
-Stages{
-    stage('Build'){
-        steps {
-            echo 'Etapa Build no disponible' 
+pipeline{
+
+    agent any
+
+    stages{
+        stage('Clone repository'){
+            steps {
+                git branch: 'main', url: 'https://github.com/GiulianiTobon/EA3_Tecnologias_Web_2'
+            }
+        }
+
+        stage('Build Docker image'){
+            steps {
+                script{
+                    withCredentials([
+                        string(credentialsId: 'MONGO_URI', variable:  'MONGO_URI')
+                    ]){
+                        docker.build('proyecto-monolitica:v1')
+                    }
+                }
+            }
+        }
+
+        stage('Deploy docker'){
+            steps{
+                script{
+                    withCredentials([
+                        string(credentialsId: 'MONGO_URI', variable:  'MONGO_URI')
+                    ]){
+                        sh 'docker-compose up -d'
+                    }
+                }      
+            }
         }
     }
 
-    stage('Test'){
-        steps {
-                    echo 'Etapa Test no disponible' 
-                }
-    }
-
-    stage('Deploy'){
-        steps{
-            sh 'docker-compose down'
-            sh 'docker-compose up -d --build'
+    post{
+        always{
+            emailText{
+                subject: "Estado del proceso:${currentBuild.currentResult}",
+                body: "Se ha completado el proceso",
+                to: "giuiani.1905@hotmail.com",
+                from: "jenkinsPruebas@tw2.iudigital.edu.co"
+            }
         }
     }
 }
