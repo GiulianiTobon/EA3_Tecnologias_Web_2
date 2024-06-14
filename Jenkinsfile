@@ -4,13 +4,6 @@ pipeline{
     
 
     stages{
-        stage('Verify Docker Installation') {
-            steps {
-                script {
-                    sh 'docker --version'
-                }
-            }
-        }
         
         stage('Clone repository'){
             steps {
