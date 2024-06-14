@@ -1,13 +1,17 @@
 pipeline{
 
-    agent {
-        docker {
-            image 'docker:20.10.7' // Usamos una imagen Docker que incluye Docker CLI
-            args '-v /var/run/docker.sock:/var/run/docker.sock' // Montamos el socket Docker
-        }
-    }
+    agent any
+    
 
     stages{
+        stage('Verify Docker Installation') {
+            steps {
+                script {
+                    sh 'docker --version'
+                }
+            }
+        }
+        
         stage('Clone repository'){
             steps {
                 git branch: 'main', url: 'https://github.com/GiulianiTobon/EA3_Tecnologias_Web_2'
