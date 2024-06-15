@@ -15,7 +15,7 @@ pipeline{
             steps {
                 script{
                     withCredentials([
-                        string(credentialsId: 'MONGO_URI', variable:  'MONGO_URI')
+                        string(credentialsId: 'MONGO_URI', variable:'MONGO_URI')
                     ]){
                         docker.build('proyecto-monolitico:v1', "--build-arg MONGO_URI=${MONGO_URI} .")
                     }
@@ -27,7 +27,7 @@ pipeline{
             steps{
                 script{
                     withCredentials([
-                        string(credentialsId: 'MONGO_URI', variable:  'MONGO_URI')
+                        string(credentialsId:'MONGO_URI', variable:'MONGO_URI')
                     ]) {
                         sh 'docker-compose up -d'
                     }

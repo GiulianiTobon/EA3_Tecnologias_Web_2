@@ -10,8 +10,8 @@ services :
     networks: 
       - proyectos-app
     environment:
-      - MONGO_URI = ${MONGO_URI}
-      - PORT = 4000
+      - MONGO_URI=${MONGO_URI}
+      - PORT=4000
 
   proyecto-monolitica-2 :
     container_name : proyecto-monolitica-2
@@ -21,8 +21,7 @@ services :
     networks: 
       - proyectos-app
     environment:
-      - MONGO_URI = ${MONGO_URI}
-      - PORT = 4000
+      - MONGO_URI=${MONGO_URI}
 
   load_balancer :
     container_name : load-balancer
